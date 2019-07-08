@@ -1,1 +1,64 @@
 
+1、AlexNet
+特点：
+（1）使用新的特征用于提高性能并减少训练时间；
+（2）使用高效防止过拟合的技术--数据增广和dropout
+（3）包含5个卷积和3个全连接层
+（4）引入relu函数作为激活函数
+（5）跨GPU并行训练
+（6）引入Local Response Normalization，在激活函数作用后加入归一化，有点BatchNorm的意思
+（7）重叠池化层，步长小于池化层大小
+
+网络结构
+	
+注：上下两部分代表在2个GPU上并行训练，第三层卷积层和全卷积层会实现所有GPU输出的连接
+
+2、VGG-1
+特点：
+（1）使用3*3的卷积核，和1*1的卷积核（可以看作输入通道的线性变换），3*3卷积核的好处是相比于一个7*7使用3个3*3加上RELU能够使判决函数更能区分类别；同时能够降低运算复杂度。
+So what have we gained by using, for instance, a stack of three 3×3 conv. layers instead of a single 7×7 layer? First, we incorporate three non-linear rectification layers instead of a single one, which makes the decision function more discriminative.Second, we decrease the number of parameters: assuming that both the input and the output of a three-layer 3 × 3 convolution stack has C channels, the stack is parametrised by 3 32C2 = 27C2 weights; at the same time, a single 7 × 7 conv. layer would require 72C2 = 49C2 parameters, i.e.81% more. This can be seen as imposing a regularisation on the 7 × 7 conv. filters, forcing them to have a decomposition through the 3 × 3 filters (with non-linearity injected in between)
+（2）栈式结构
+
+
+3、GoogLeNet
+特点：
+（1）引入Inception结构
+（2）使用1*1卷积核用于降维（通过减少输出通道数实现降维），
+
+（3）GoogLeNet网络结构中有3个LOSS单元，这样的网络设计是为了帮助网络的收敛。在中间层加入辅助计算的LOSS单元，目的是计算损失时让低层的特征也有很好的区分能力，从而让网络更好地被训练。在论文中，这两个辅助LOSS单元的计算被乘以0.3，然后和最后的LOSS相加作为最终的损失函数来训练网络。
+
+4、VGG2
+（1）Inception结构改进，非对称的卷积结构1*n，减少计算量节省计算资源
+
+
+
+（2）网络结构
+
+
+5、resnet
+（1）残差网络
+
+
+
+
+
+（2）每个单元使用conv2d+bn+relu的结构
+
+6、DenseNet
+（1）相比于resnet不同点在于，每一层用到了前面所有层的输出作为输入
+
+（2）resnet每一层都是当前层和上一层相加，densenet每一层是当前层和上一层级联
+in contrast to ResNets, we never combine features
+through summation before they are passed into a layer; instead, we combine features by concatenating them
+
+--》》》
+
+（3）每个Denseblock单元使用BN+REULU+CONV的结构，和resnet有差异
+（4）网络结构
+
+
+
+Resnet34
+
+
+
